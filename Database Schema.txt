@@ -1,8 +1,9 @@
 users:
-id: String
-username: String
+
+userid : 
+userName: String
 firstName: string 
-lastName: stirng
+lastName: string
 password: string
 email: string 
 typeOfUser: string
@@ -10,15 +11,15 @@ status: boolean  (for ban)
 
 Books:
 id: ObjectId
-image: string   (multer npm lib for uploading imgs to backend)
-title: string 
-author: string
-publisher: string
-category: string
-yearOfPublishing: number
-uploader: users_id
-amountRate: number
-copiesNumber: number (increment if rental gets closed/ decrement when request approved of Rentals) 
+    image: string   (multer npm lib for uploading imgs to backend)
+    title: string 
+    author: string
+    publisher: string
+    category: string
+    yearOfPublishing: Int32  //number
+    uploader: String  // users_id
+    amountRate: Int32 // number
+    copiesNumber: Int32 number (increment if rental gets closed/ decrement when request approved of Rentals) 
 
 
 Rentals:
@@ -37,9 +38,6 @@ Status: string   ( closed/ active/ overdue/ requestPending)
 ENV:
 LateFeePerDay : 50
 MaxDateToRent : 30
-
-
-
 
 
 
