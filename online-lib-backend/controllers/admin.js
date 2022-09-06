@@ -12,6 +12,8 @@ let userData = userForm.userModel({
     status: true
     });
 
+        console.log(userData)
+
     userData.save(err => { 
         if(err){
             console.log(err)
@@ -46,14 +48,30 @@ async function userdisable(req,res){
     let useremail = req.body.email
 
     let user = await userForm.userModel.findOne({email : useremail })
-    
-        if(user){
-            user.updateOne({email : user.email}, {status : "0"})
+        console.log(user)
 
+        if(user){
+            console.log("found user")
+            user.updateOne({email : user.email}, {status : false}, function (err, docs) {
+                if (err){
+                    console.log(err)
+                }
+                else{
+                    console.log("Updated user : ", docs);
+                }
+                })
         }
         else{
-            res.send("User not found")
+            res.send("user not found")
         }
+        // //res.send(user)
+        // if(user){
+        //     user.updateOne({email : user.email}, {status : false})
+
+        // }
+        // else{
+        //     res.send("User not found")
+        // }
 
 }
 
