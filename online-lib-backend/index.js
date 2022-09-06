@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const bookroutes = require('./routes/book');
 const userroutes =  require('./routes/user')
+const staffroutes =  require('./routes/user')
 
 
 let app = express()
@@ -12,6 +13,7 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname))
 app.use('/book', bookroutes)
 app.use('/user', userroutes)
+app.user('/staff',staffroutes)
 
 app.get("/",(req,res)=>{
 
