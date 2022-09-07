@@ -33,15 +33,15 @@ function  userloginctrl(req, res){
 
     let user = userForm.userModel.findOne({email : useremail })
         console.log(user)
-        // if(user){
-        //     if(userpassword == user.password){
-        //         res.json({email : user.email , firstName: user.firstName }).status(200)
-        //     }
+        if(user){
+            if(userpassword == user.password){
+                res.json({email : user.email , firstName: user.firstName }).status(200)
+            }
             
-        // }
-        // else{
-        //     res.send("User not found").status(404)
-        // }
+        }
+        else{
+            res.send("User not found").status(404)
+        }
 
          
 }

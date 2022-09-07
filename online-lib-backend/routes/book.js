@@ -1,10 +1,11 @@
 const express  = require('express')
 const routes = express.Router()
-const {addbooksctrl} = require('../controllers/books.js')
+//const {addbooksctrl} = require('../controllers/books.js')
+const booksctrls = require('../controllers/books.js')
 
-routes.post('/addbooks', addbooksctrl )
-routes.post('/deatailsbooks', addbooksctrl )
-routes.post('/deletbooks', addbooksctrl )
+routes.post('/addbooks', booksctrls.addbooksctrl )
+routes.post('/listofbooks', booksctrls.listbooksctrl )
+routes.post('/searchbooks', booksctrls.searchbooksctrl )
 
 
 module.exports = routes
