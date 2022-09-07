@@ -8,9 +8,11 @@ let userData = userForm.userModel({
 	lastName: req.body.lastName,
     email: req.body.email,
     password: req.body.password,
-    typeofuser: 'user',
+    typeOfUser: 'user',
     status: true
     });
+
+    //console.log(userData)
 
     userData.save(err => { 
         if(err){
@@ -24,11 +26,12 @@ let userData = userForm.userModel({
 
 
 
-async function  userloginctrl(req, res){
+function  userloginctrl(req, res){
     let useremail = req.body.email
-    let userpassword = req.body.password
+    //let userpassword = req.body.password
+    console.log(useremail)
 
-    let user = await userForm.userModel.findOne({email : useremail })
+    let user = userForm.userModel.findOne({email : useremail })
         console.log(user)
         if(user){
             if(userpassword == user.password){
@@ -40,17 +43,9 @@ async function  userloginctrl(req, res){
             res.send("User not found").status(404)
         }
 
-        
-    
-
-    // if(useremail == 'p@p.com' || userpassword == '12345'){
-    //     res.send('logged in')
-    // }
-    // else{
-    //     res.send('failed')
-    // }
+         
 }
 
 
     module.exports = {userregisterctrl , userloginctrl}
-    //module.exports = {userloginctrl}
+    

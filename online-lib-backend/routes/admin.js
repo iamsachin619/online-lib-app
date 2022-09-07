@@ -1,12 +1,12 @@
 const express  = require('express')
 const routes = express.Router()
-//const {userregisterctrl} = require('../controllers/users.js')
-//const {userloginctrl} = require('../controllers/users.js')
-const userfunctions = require('../controllers/admin')
+const adminfunctions = require('../controllers/admin')
 
-//routes.post('/userregister', userregisterctrl )
-routes.post('/staffregister', userfunctions.staffregisterctrl )
-routes.post('/stafflogin', userfunctions.staffloginctrl )
+
+routes.post('/staffregister', adminfunctions.staffregisterctrl )
+routes.post('/stafflogin', adminfunctions.staffloginctrl )
+routes.post('/disableuser', adminfunctions.userdisable)
+routes.post('/enableuser', adminfunctions.userenable)
 
 
 

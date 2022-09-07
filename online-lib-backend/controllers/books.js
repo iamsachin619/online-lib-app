@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const duration = 24*60*60*1000
 const bookForm = require("../models/bookModel");
 
 
@@ -15,10 +14,8 @@ let bookData = bookForm.bookModel({
     amountRate: req.body.amountRate,
     });
 
-    console.log(req.body.image)
-    console.log(bookData)
-    
-
+    // console.log(req.body.image)
+    // console.log(bookData)
     bookData.save(err => { 
         if(err){
             console.log(err)
@@ -29,11 +26,16 @@ let bookData = bookForm.bookModel({
     }
 
 
-    function listbooksctrl(req, res){}
+    function listbooksctrl(req, res){
+
+            let listofbooks = bookForm.bookModel.find({})
+            console.log(listofbooks)
+
+    }
     function searchbooksctrl(req, res){}
     
 
 
 
 
-    module.exports = {addbooksctrl}
+    module.exports = {addbooksctrl , listbooksctrl , searchbooksctrl}
