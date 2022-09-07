@@ -36,7 +36,7 @@ function bookrentalcreatecltr(req, res){
             rentData.status = 'approve'
 
             //update
-            rentForm.rentModel.updateOne({_id: mongoose.Types.ObjectId(req.body.rental_id)}, {$set:{...rentData}} )
+            rentForm.rentModel.updateOne({_id: mongoose.Types.ObjectId(req.body.rental_id)}, rentData )
             // rentData.save(err => { 
             //     if(err){
             //         console.log(err)
