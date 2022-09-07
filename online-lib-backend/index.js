@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname))
 app.use('/book', bookroutes)
 app.use('/user', userroutes)
-app.use('/staff', adminroutes)
+app.use('/admin', adminroutes)
 
 app.get("/",(req,res)=>{
 

@@ -44,37 +44,55 @@ async function  staffloginctrl(req, res){
 
 }
 
+
+
 async function userdisable(req,res){
     let useremail = req.body.email
 
     let user = await userForm.userModel.findOne({email : useremail })
-        console.log(user)
+        console.log("User details: " + user )
 
         if(user){
             console.log("found user")
-            user.updateOne({email : user.email}, {status : false}, function (err, docs) {
+          userForm.userModel.updateOne({email :  user.email }, { status  : false }, function (err, docs) {
                 if (err){
                     console.log(err)
                 }
                 else{
                     console.log("Updated user : ", docs);
+                    res.send("lets check")
                 }
                 })
         }
         else{
             res.send("user not found")
         }
-        // //res.send(user)
-        // if(user){
-        //     user.updateOne({email : user.email}, {status : false})
-
-        // }
-        // else{
-        //     res.send("User not found")
-        // }
-
+       
 }
 
 
-    module.exports = {staffregisterctrl , staffloginctrl, userdisable}
+async function userenable(req,res){
+    let useremail = req.body.email
+
+    let user = await userForm.userModel.findOne({email : useremail })
+        console.log("User details: " + user )
+
+        if(user){
+        
+          userForm.userModel.updateOne({email :  user.email }, { status  : true }, function (err, docs) {
+                if (err){
+                    console.log(err)
+                }
+                else{
+                   res.send(user)
+                }
+                })
+        }
+        else{
+            res.send("user not found")
+        }
+       
+}
+
+    module.exports = {staffregisterctrl , staffloginctrl, userdisable, userenable}
     
