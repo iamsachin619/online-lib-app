@@ -5,6 +5,8 @@ const session = require("express-session");
 const bookroutes = require('./routes/book');
 const userroutes =  require('./routes/user')
 const rentRoute = require('./routes/rent')
+const staffroutes =  require('./routes/user')
+
 
 let app = express()
 app.use(bodyParser.urlencoded({extended:true}));
@@ -13,6 +15,8 @@ app.use(express.static(__dirname))
 app.use('/book', bookroutes)
 app.use('/user', userroutes)
 app.use('/rent', rentRoute)
+app.user('/staff',staffroutes)
+
 app.get("/",(req,res)=>{
 
     res.send("Logged in ")
