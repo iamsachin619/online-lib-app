@@ -13,7 +13,6 @@ let bookData = bookForm.bookModel({
     yearOfPublishing: req.body.yearOfPublishing,
     uploader: req.body.uploader,
     amountRate: req.body.amountRate,
-    copiesNumber: req.body.copiesNumber
     });
 
     console.log(req.body.image)

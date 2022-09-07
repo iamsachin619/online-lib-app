@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const bookroutes = require('./routes/book');
 const userroutes =  require('./routes/user')
-
+const rentRoute = require('./routes/rent')
 
 let app = express()
 app.use(bodyParser.urlencoded({extended:true}));
@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname))
 app.use('/book', bookroutes)
 app.use('/user', userroutes)
-
+app.use('/rent', rentRoute)
 app.get("/",(req,res)=>{
 
     res.send("Logged in ")
