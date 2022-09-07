@@ -29,14 +29,10 @@ function bookrentalcreatecltr(req, res){
 
     function bookrentalapprovalctrl(req,res){
 
-        let rentData = rentForm.rentModel.findOne({_id: mongoose.Types.ObjectId(req.body.rental_id)})
+        let rentData = rentForm.rentModel.findOneAndUpdate({_id: req.body.rental_id},{approvedBy:req.body.staff_id,status: 'approve'})
         console.log(rentData)
         
-            rentData.approvedBy = req.body.staff_id
-            rentData.status = 'approve'
-
-            //update
-            rentForm.rentModel.updateOne({_id: mongoose.Types.ObjectId(req.body.rental_id)}, rentData )
+          
             // rentData.save(err => { 
             //     if(err){
             //         console.log(err)
