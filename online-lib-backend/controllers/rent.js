@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 const rentForm = require("../models/rentmodel");
 
-
+//renting the book
 function bookrentalcreatecltr(req, res){
     let dueDate = new Date()
+    //locadate = dueDate.getDate()
+    //console.log(locadate)
+    res.send("hi")
     dueDate.setDate(dueDate.getDate() + req.body.noOfDaysToRent)
-
+    
  let rentData = rentForm.rentModel({
     Book_id: req.body.Book_id,
     User_id: req.body.User_id,
