@@ -10,6 +10,8 @@ function bookrentalcreatecltr(req, res){
     // rentaldays= dueDate.setDate(todaysday + 10 ) //req.body.noOfDaysToRent
     rentaldays = (todaysday + 30)
     console.log(rentaldays)
+    console.log(dueDate)
+    dueDate.setDate(dueDate.getDate() + req.body.noOfDaysToRent)
 
  let rentData = rentForm.rentModel({
     Book_id: req.body.Book_id,
