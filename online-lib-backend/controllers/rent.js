@@ -4,6 +4,7 @@ const rentForm = require("../models/rentmodel");
 
 function bookrentalcreatecltr(req, res){
     let dueDate = new Date()
+    console.log(dueDate)
     dueDate.setDate(dueDate.getDate() + req.body.noOfDaysToRent)
 
  let rentData = rentForm.rentModel({
