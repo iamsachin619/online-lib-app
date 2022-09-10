@@ -25,7 +25,7 @@ id: ObjectId
 Rentals:
 Book_id: book_id
 User_id: user_id
-issueDate: Date
+issueDate: Date // on accept by staff that day
 dueDate: Date
 amount: number
 approvedBy: ObjectId(User/staff)
