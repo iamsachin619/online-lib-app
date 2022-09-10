@@ -4,7 +4,7 @@ const mongoose = require('./mongodb').mongoose;
 //Creating the Schema for book
 let rentSchema = mongoose.Schema({
     Book_id: String,
-    User_id: String,
+    User_id: {type : String,required: true},
     issueDate: Date,
     dueDate: Date,
     amount: Number,

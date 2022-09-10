@@ -45,7 +45,6 @@ async function  staffloginctrl(req, res){
 }
 
 
-
 async function userdisable(req,res){
     let useremail = req.body.email
 
@@ -54,15 +53,18 @@ async function userdisable(req,res){
 
         if(user){
             console.log("found user")
-          userForm.userModel.updateOne({email :  user.email }, { status  : false }, function (err, docs) {
-                if (err){
-                    console.log(err)
-                }
-                else{
-                    console.log("Updated user : ", docs);
-                    res.send("lets check")
-                }
-                })
+          userForm.userModel.updateOne({email :  user.email }, { status  : false },  (err, docs) => {
+    
+            if (err){
+                console.log(err)
+            }
+            else{
+                console.log("Updated user : ", docs);
+                res.send("lets check")
+            }
+            
+    
+    })
         }
         else{
             res.send("user not found")
