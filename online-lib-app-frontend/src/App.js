@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 import NavBar from './Components/NavBar';
 import UserBooks from './Pages/User/UserBooks';
 function App() {
-  sessionStorage.setItem('user', JSON.stringify({role:'staff'}))
+  sessionStorage.setItem('user', JSON.stringify({role:'staff'}))//line to remove later
   let sessionUser = JSON.parse(sessionStorage.getItem('user'))
   const [user, setUser] = useState(sessionUser)
   useEffect(()=>{
@@ -37,8 +37,8 @@ function App() {
         <Route path="/login" element={<LoginPage />}/>
 
         {/* users */}
-        <Route path="/register" element={<UserRegister />}/>
-        <Route path="/userLandingPage" element={<UserLandingPage />}/>
+        <Route path="/register" element={<UserRegister />}/> 
+        <Route path="/userLandingPage" element={<UserLandingPage />}/>  
         <Route path="/userRentalsPage" element={<UserRentalsPage />}/>   {/* orders placed by user */}
         <Route path="/userBooks" element={<UserBooks />}/>   {/* books rented by user   ...can return it from here...check due date */}
 
@@ -47,8 +47,8 @@ function App() {
         <Route path="/staffRental" element={<StaffRentalPage />}/>   {/*accept or decline book requests*/}
 
         {/* admin */}
-        <Route path="/adminStaffControl" element={<AdminStaffControl />}/>
-        <Route path="/adminUserControl" element={<AdminUserControl />}/>
+        <Route path="/adminStaffControl" element={<AdminStaffControl />}/>{/*to add, edit and delete staff*/}
+        <Route path="/adminUserControl" element={<AdminUserControl />}/>{/*to ban and unban user*/}
     </Routes>
     </div>
   );
