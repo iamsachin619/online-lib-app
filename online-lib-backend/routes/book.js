@@ -4,8 +4,10 @@ const routes = express.Router()
 const booksctrls = require('../controllers/books.js')
 
 routes.post('/addbooks', booksctrls.addbooksctrl )
-routes.post('/listofbooks', booksctrls.listbooksctrl )
-routes.post('/searchbooks', booksctrls.searchbooksctrl )
+routes.get('/listofbooks', booksctrls.listbooksctrl )
+routes.get('/searchbooks', booksctrls.searchbooksctrl )
+routes.post('/deletebooks', booksctrls.deletebooksctrl)
+routes.post('/editbooks', booksctrls.editbookctrl)
 
 
 module.exports = routes
