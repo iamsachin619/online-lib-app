@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,6 +10,11 @@ import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import BookCardEdit from '../../Components/BookCardEdit';
+
 export default function StaffDashboard() {
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
@@ -22,15 +27,28 @@ export default function StaffDashboard() {
     const handleClose = () => {
       setOpen(false);
     };
+
+    const [imageFile, setImageFile] = useState(null)
   return (
     <>
     <div>
         <Toolbar/>
-        <div className="addNewBook m-3 d-flex justify-content-end">
-            <AddCircleIcon style={{fontSize:'38px'}} onClick={()=> handleClickOpen()}/>
-        </div>
-    </div>
+        <div className=" addNewBook m-3 d-flex justify-content-end  align-items-center font-weight-bold">
+           <div className="btn"  style={{fontWeight:'bold'}} onClick={()=> handleClickOpen()}>
 
+            Add new book <AddCircleIcon style={{fontSize:'38px'}}/>
+           </div>
+        </div>
+    <div className="container">
+
+        <BookCardEdit/>
+        <BookCardEdit/>
+        <BookCardEdit/>
+        <BookCardEdit/>
+    </div>
+    </div>
+   
+    {/* modal to add books */}
     <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -53,7 +71,14 @@ export default function StaffDashboard() {
     yearOfPublishing: Int32  //number
     uploader: String  // users_id
     amountRate: */}
-    
+            <div className="container d-flex justify-content-center align-items-start">
+
+            {imageFile?<img src={ URL.createObjectURL(imageFile)} width='177px'/>:<img src='./assets/bookPlaceholder.png'/>}
+            <IconButton color="primary" aria-label="upload picture" component="label">
+                <input hidden accept="image/*" type="file" onChange={(e)=> setImageFile(e.target.files[0])}/>
+                <PhotoCamera />
+            </IconButton>
+            </div>
            <TextField id="filled-basic" label="Book title" variant="filled" className='m-3'/> 
            <TextField id="filled-basic" label="Book author" variant="filled"  className='m-3'/> 
            <TextField id="filled-basic" label="Book publisher" variant="filled"  className='m-3'/> 
@@ -64,10 +89,10 @@ export default function StaffDashboard() {
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
-            Disagree
+            Cancel
           </Button>
           <Button onClick={handleClose} autoFocus>
-            Agree
+            Add Book!
           </Button>
         </DialogActions>
       </Dialog>
