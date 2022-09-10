@@ -4,7 +4,7 @@ const rentForm = require("../models/rentmodel");
 
 function bookrentalcreatecltr(req, res){
     let dueDate = new Date()
-    console.log(dueDate)
+    //console.log(dueDate)
     dueDate.setDate(dueDate.getDate() + req.body.noOfDaysToRent)
 
  let rentData = rentForm.rentModel({
@@ -28,12 +28,17 @@ function bookrentalcreatecltr(req, res){
         }})
     }
 
-    function bookrentalapprovalctrl(req,res){
+    // function bookrentalapprovalctrl(req,res){
 
-        let rentData = rentForm.rentModel.findOneAndUpdate({_id: req.body.rental_id},{approvedBy:req.body.staff_id,status: 'approve'})
-        console.log(rentData)
+    //     let rentData = rentForm.rentModel.findOneAndUpdate({Book_id:req.body.Book_id},{$set:{"status": "approve"}})
+    //     console.log(rentData)
+
+        // let rentData = rentForm.rentModel.findOne({Book_id: req.body.Book_id, User_id: req.body.User_id})
+        // console.log(rentData)
+
+        // res.json({Book_id: rentData.Book_id, User_id: rentData.User_id }).status(200)
+            
         
-          
             // rentData.save(err => { 
             //     if(err){
             //         console.log(err)
@@ -43,7 +48,35 @@ function bookrentalcreatecltr(req, res){
             //     }})
             
         
-    }
+    // }
+
+
+    // function getRentallistctlr (req, res) {
+    //     rentForm.rentModel.find({
+    //         Book_id: req.body.Book_id,
+        // }, {
+        //     _id: 0,
+        //     __v: 0
+        // }, (err, data) => {
+        //     if (err) {
+        //         res.status(500).send({
+        //             success: false,
+        //             message: 'Something went wrong.'
+        //         });
+        //     } else if (data.length === 0) {
+        //         res.status(404).send({
+                   
+        //             success: false,
+        //             message: 'Invalid email provided.'
+        //         });
+        //     } else {
+        //         res.send(data);
+                
+        //     }
+        // });
+    // });
+
+
     
 
 

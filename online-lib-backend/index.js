@@ -16,7 +16,7 @@ app.use(express.static(__dirname))
 app.use('/book', bookroutes)
 app.use('/user', userroutes)
 app.use('/rent', rentRoute)
-app.user('/staff',staffroutes)
+app.use('/staff',staffroutes)
 app.use('/admin', adminroutes)
 
 app.get("/",(req,res)=>{
