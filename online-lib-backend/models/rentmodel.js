@@ -5,13 +5,15 @@ const mongoose = require('./mongodb').mongoose;
 let rentSchema = mongoose.Schema({
     Book_id: String,
     User_id: {type : String,required: true},
-    issueDate: Date,
+    createdDate: Date,
     dueDate: Date,
     amount: Number,
     approvedBy: String,
     lateFeeCharged: Number,
     returnDate: Date,
-    Status: String
+    Status: String,
+    approvalDate: Date,
+    noOfDaysToRent:Number
 });
 
 
