@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const rentForm = require("../models/rentmodel");
 const bookForm = require("../models/bookModel");
+
+
 //renting the book
 function bookrentalcreatecltr(req, res){
     let dueDate = new Date()
@@ -47,7 +49,8 @@ function bookrentalcreatecltr(req, res){
             
         let num = req.body._id
         console.log(req.body._id) 
-async function bookrentalcreatecltr(req, res) {
+
+        async function bookrentalcreatecltr(req, res) {
   let dueDate = new Date();
   todaysday = dueDate.getDate();
 
@@ -62,13 +65,7 @@ let book =await bookForm.bookModel.findOne({_id:req.body.book_id})
         
         res.send("let check")
         
-            // rentData.save(err => { 
-            //     if(err){
-            //         console.log(err)
-            //     }
-            //     else{
-            //         res.send({success: true });
-            //     }})
+        
                            
         
     }
@@ -105,33 +102,11 @@ let book =await bookForm.bookModel.findOne({_id:req.body.book_id})
             
         }))
         
-    // }
+    
 
 
-    // function getRentallistctlr (req, res) {
-    //     rentForm.rentModel.find({
-    //         Book_id: req.body.Book_id,
-        // }, {
-        //     _id: 0,
-        //     __v: 0
-        // }, (err, data) => {
-        //     if (err) {
-        //         res.status(500).send({
-        //             success: false,
-        //             message: 'Something went wrong.'
-        //         });
-        //     } else if (data.length === 0) {
-        //         res.status(404).send({
-                   
-        //             success: false,
-        //             message: 'Invalid email provided.'
-        //         });
-        //     } else {
-        //         res.send(data);
-                
-        //     }
-        // });
-    // });
+    
+        
 
         res.json(myBooks)
 
