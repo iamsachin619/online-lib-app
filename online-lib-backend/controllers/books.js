@@ -26,10 +26,12 @@ let bookData = bookForm.bookModel({
     }
 
 
-    function listbooksctrl(req, res){
+    async function listbooksctrl(req, res){
+        const filter={}
 
-            let listofbooks = bookForm.bookModel.find({})
+            let listofbooks = await bookForm.bookModel.find(filter)
             console.log(listofbooks)
+            res.json(listofbooks)
 
     }
     function searchbooksctrl(req, res){}
