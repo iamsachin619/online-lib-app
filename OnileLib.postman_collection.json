@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "117fe6e0-9e4c-43d5-8384-d2707fac3ed9",
+		"name": "OnileLib",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14572043"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "listOfUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/admin/getUserList",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"getUserList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchUsers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"search\":\"p@p.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/searchUsers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"searchUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "staff register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"staff\",  \r\n\t\"lastName\": \"Lname\",\r\n    \"email\": \"s@staff.com\",\r\n    \"password\": \"12345\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/staffregister",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"staffregister"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"staff@p.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/disableuser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"disableuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"p2@p.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/enableuser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"enableuser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "userregister",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"user\",  \r\n\t\"lastName\": \"lname\",\r\n    \"email\": \"s@user.com\",\r\n    \"password\": \"12345\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/userregister",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"userregister"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create rent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":\"6317a14b94ee07d4a896b8da\",\r\n    \"book_id\":\"6312f8d25c2adc95011a692e\",\r\n    \"noOfDaysToRent\":15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/createRental",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"createRental"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usermybooks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\" : \"631da79eb7c64b1000f801cf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/usermybooks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"usermybooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usermyOrders",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\" : \"p2@p\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/rent/usermyOrders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rent",
+								"usermyOrders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "staff",
+			"item": [
+				{
+					"name": "addbooks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"image\": \"/book.jpg\",\r\n\"title\": \"testbsook3\",\r\n\"author\": \"all3\",\r\n\"publisher\": \"mes3\",\r\n\"category\": \"fictsion2\",\r\n\"yearOfPublishing\": 1923,\r\n\"uploader\": \"yyy\",\r\n\"amountRate\": 100,\r\n\"copiesNumber\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/staff/addbooks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"addbooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list of pending req",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"image\": \"/book.jpg\",\r\n\"title\": \"testbsook3\",\r\n\"author\": \"all3\",\r\n\"publisher\": \"mes3\",\r\n\"category\": \"fictsion2\",\r\n\"yearOfPublishing\": 1923,\r\n\"uploader\": \"yyy\",\r\n\"amountRate\": 100,\r\n\"copiesNumber\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/staff/addbooks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"addbooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approveRental",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"rental_id\":  \"6318d34d5fb4faca3af3388f\",\r\n  \"staff_id\": \"631da6f0b7c64b1000f801c5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/staff/approveRental",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"approveRental"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletebooksctrl",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"book_id\" : \"6317a05879a05980f04fdd11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/staff/deletebooks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"deletebooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditBook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"book_id\" : \"6312fea38352f6401606c588\",\r\n    \"editObj\": {\r\n    \"author\": \"Arun\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/staff/editbooks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"editbooks"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user/userlogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"p2@p.com\",\r\n    \"password\":\"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/userlogin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"userlogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listofbooks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/book/listofbooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"book",
+						"listofbooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Searchbook",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"search\" : \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/book/searchbooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"book",
+						"searchbooks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
