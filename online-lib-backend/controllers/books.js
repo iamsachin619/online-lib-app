@@ -52,7 +52,7 @@ function addbooksctrl(req, res) {
             //console.log(listofbooks)
             //res.json({title : listofbooks.title , year: listofbooks.yearOfPublishing }).status(200)
             res.json(listofbooks)
-  });
+  };
 
   // console.log(req.body.image)
   // console.log(bookData)
