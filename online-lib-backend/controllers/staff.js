@@ -37,7 +37,7 @@ async function bookrentalapprovalctrl(req, res) {
     // res.send("let check")
   }
 
-  async function bookrentaldeclinectrl(req, res) {
+  async function bookrentaldeclinectrl(req, res){
     const rental_id = req.body.rental_id;
     const staff_id = req.body.staff_id;
     console.log(req.body._id);
