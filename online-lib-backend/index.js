@@ -5,12 +5,20 @@ const session = require("express-session")
 const bookroutes = require('./routes/book')
 const userroutes =  require('./routes/user')
 <<<<<<< HEAD
+<<<<<<< HEAD
 const rentroutes = require('./routes/rent')
 const rentRoute = require('./routes/rent')
 const staffroutes =  require('./routes/user')
 =======
 const staffroutes = require('./routes/staff')
 >>>>>>> 2110d88 (backend middleware and routes restructure)
+=======
+
+
+const rentroutes = require('./routes/rent')
+const staffroutes =  require('./routes/user')
+
+>>>>>>> 680bdb3 (Arun)
 const adminroutes =  require('./routes/admin')
 const dotenv = require('dotenv').config()
 var cookieParser = require('cookie-parser')
@@ -23,10 +31,18 @@ app.use(express.static(__dirname))
 app.use('/book', bookroutes)
 app.use('/user', userroutes)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 app.use('/rent', rentroutes)
 =======
 >>>>>>> 2110d88 (backend middleware and routes restructure)
+=======
+
+app.use('/rent', rentRoute)
+
+app.use('/rent', rentroutes)
+
+>>>>>>> 680bdb3 (Arun)
 app.use('/staff',staffroutes)
 
 app.use('/rent', rentRoute)

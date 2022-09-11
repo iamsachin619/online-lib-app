@@ -56,9 +56,13 @@ function addbooksctrl(req, res) {
             //res.json({title : listofbooks.title , year: listofbooks.yearOfPublishing }).status(200)
 >>>>>>> 16c5808 (Pramod)
             res.json(listofbooks)
+<<<<<<< HEAD
 =======
   });
 >>>>>>> 2110d88 (backend middleware and routes restructure)
+=======
+  };
+>>>>>>> 680bdb3 (Arun)
 
   // console.log(req.body.image)
   // console.log(bookData)
