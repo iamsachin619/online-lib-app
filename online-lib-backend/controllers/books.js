@@ -33,12 +33,18 @@ function addbooksctrl(req, res) {
             res.json(listofbooks)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 20e09fbd92d54f4edc93d221209dca2cf0d12f18
     async function listbooksctrl(req, res){
         const filter={}
 
             let listofbooks = await bookForm.bookModel.find(filter)
             console.log(listofbooks)
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 20e09fbd92d54f4edc93d221209dca2cf0d12f18
     }
     
     async function searchbooksctrl(req, res){
@@ -54,6 +60,7 @@ function addbooksctrl(req, res) {
         let listofbooks = await bookForm.bookModel.find(filter)
             //console.log(listofbooks)
             //res.json({title : listofbooks.title , year: listofbooks.yearOfPublishing }).status(200)
+<<<<<<< HEAD
 >>>>>>> 16c5808 (Pramod)
             res.json(listofbooks)
 <<<<<<< HEAD
@@ -63,6 +70,10 @@ function addbooksctrl(req, res) {
 =======
   };
 >>>>>>> 680bdb3 (Arun)
+=======
+            res.json(listofbooks)
+  };
+>>>>>>> 20e09fbd92d54f4edc93d221209dca2cf0d12f18
 
   // console.log(req.body.image)
   // console.log(bookData)

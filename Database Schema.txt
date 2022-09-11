@@ -42,9 +42,15 @@ MaxDateToRent : 30
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 20e09fbd92d54f4edc93d221209dca2cf0d12f18
 
 
 
 
+<<<<<<< HEAD
 >>>>>>> 8777130 (React added pages)
+=======
+>>>>>>> 20e09fbd92d54f4edc93d221209dca2cf0d12f18
