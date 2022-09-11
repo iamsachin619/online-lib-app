@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const rentForm = require("../models/rentmodel");
-
+const bookForm = require('../models/bookModel')
 //renting the book
 function bookrentalcreatecltr(req, res){
     let dueDate = new Date()
@@ -35,6 +35,7 @@ function bookrentalcreatecltr(req, res){
     }
 
     // function bookrentalapprovalctrl(req,res){
+    async function bookrentalapprovalctrl(req,res){
 
     //     let rentData = rentForm.rentModel.findOneAndUpdate({Book_id:req.body.Book_id},{$set:{"status": "approve"}})
     //     console.log(rentData)
@@ -47,11 +48,21 @@ function bookrentalcreatecltr(req, res){
         let num = req.body._id
         console.log(req.body._id) 
 
-        let rentData = rentForm.rentModel.find({_id : req.body._id })
+       // let rentData = await rentForm.rentModel.find({_id : req.body._id })
+        
+        let rentData = await rentForm.rentModel.findOneAndUpdate({_id: req.body.rental_id},
+                {approvedBy:req.body.staff_id,Status: 'approved'},
+                {new: true}, (err, docs) => {
+                    if (err){
+                        console.log(err)
+                    }
+                    else{
+                        console.log("Updated: ", docs);
+                        res.send("lets check")
+                    }})
+
         console.log(rentData)
-        //let rentData = rentForm.rentModel.findOneAndUpdate({Book_id: req.body.rental_id},{approvedBy:req.body.staff_id,status: 'approve'})
-        //let rentData = rentForm.rentModel.findOneAndUpdate({Book_id: tostring(req.body.Book_id)},{ $set: {approvedBy:'1234',status: 'approve'}})
-        // console.log(rentData)
+        
         res.send("let check")
         
             // rentData.save(err => { 
@@ -61,7 +72,24 @@ function bookrentalcreatecltr(req, res){
             //     else{
             //         res.send({success: true });
             //     }})
+                           
+        
+    }
+
+
+    async function usermybooks(req, res){
+
+        let user_id = req.body.user_id
+        
+        let rentsByUser = await rentForm.rentModel.find({User_id: user_id, Status:'approved'})
+
+        console.log(rentsByUser)
+        
+          let myBooks = await Promise.all(rentsByUser.map(async(rental)=>{
+            let book = await bookForm.bookModel.findOne({_id: rental.Book_id})  
+           return book
             
+        }))
         
     // }
 
@@ -91,6 +119,16 @@ function bookrentalcreatecltr(req, res){
         // });
     // });
 
+        res.json(myBooks)
+
+    }
+
+
+    async function usermyOrders(req, res){
+        let user_id = req.body.user_id
+        let rentsByUser = await rentForm.rentModel.find({User_id: user_id})
+        res.json(rentsByUser)
+    }
 
     
-module.exports = { bookrentalcreatecltr , bookrentalapprovalctrl}
+module.exports = { bookrentalcreatecltr , bookrentalapprovalctrl, usermybooks,usermyOrders}
