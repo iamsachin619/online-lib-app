@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const userForm = require("../models/userModel");
-
+const jwt = require('jsonwebtoken')
 //Staff registration section
 function staffregisterctrl(req, res){
 let userData = userForm.userModel({
@@ -17,14 +17,34 @@ let userData = userForm.userModel({
     userData.save(err => { 
         if(err){
             console.log(err)
+            res.send('not created').status(400)
         }
         else{
             res.send({success: true });
         }})
-    }
+}
 
+async function listOfUsers(req, res){
+    let users = await userForm.userModel.find()
+    res.json(users).status(200)
+}
 
+async function searchUser(req, res){
+    console.log('serach funciton')
+    let searchtitle = req.body.search
 
+    const filter = {
+        $or: [
+           
+          { firstName: { $in: [searchtitle] } },
+          { lastName: { $in: [searchtitle] } },
+          { email: { $in: [searchtitle] } },
+        ],
+      };
+
+    const searchResult = await userForm.userModel.find(filter)
+    res.json(searchResult).status(200)
+}
 //Staff login section
 async function  staffloginctrl(req, res){
     let useremail = req.body.email
@@ -33,8 +53,25 @@ async function  staffloginctrl(req, res){
     let user = await userForm.userModel.findOne({email : useremail })
         
         if(user){
+
+            if(user.typeOfUser != 'staff'){
+                res.send('not a staff').status(403)
+            }
+            if(user.status == false){
+                res.send('staff is not activated').status(403)
+            }
             if(userpassword == user.password){
-                res.json({email : user.email , firstName: user.firstName }).status(200)
+                const token = jwt.sign(
+                    { id: user._id, role: "staff" },
+                    process.env.JWT_SECRET
+                  );
+  
+                res
+                .cookie("access_token", token, { httpOnly: true })
+                .json({email : user.email , firstName: user.firstName,role:user.typeOfUser })
+                .status(200)
+            }else{
+                res.send('invalid pass').status(401)
             }
             
         }
@@ -57,10 +94,11 @@ async function userdisable(req,res){
     
             if (err){
                 console.log(err)
+                res.send('task failed').status(400)
             }
             else{
                 console.log("Updated user : ", docs);
-                res.send("lets check")
+                res.send("updated").status(200)
             }
             
     
@@ -84,17 +122,18 @@ async function userenable(req,res){
           userForm.userModel.updateOne({email :  user.email }, { status  : true }, function (err, docs) {
                 if (err){
                     console.log(err)
+                    res.send('task failed').status(400)
                 }
                 else{
-                   res.send(user)
+                   res.send('user enabled').status(200)
                 }
                 })
         }
         else{
-            res.send("user not found")
+            res.send("user not found").status(404)
         }
        
 }
 
-    module.exports = {staffregisterctrl , staffloginctrl, userdisable, userenable}
+    module.exports = {staffregisterctrl , staffloginctrl, userdisable, userenable,listOfUsers,searchUser}
     

@@ -31,7 +31,7 @@ amount: number
 approvedBy: ObjectId(User/staff)
 lateFeeCharged: 0   (will change when rentals closed)
 returnDate: Date
-Status: string   ( closed/ active/ overdue/ requestPending)
+Status: string   ( closed/ active/ overdue/ pending)
 
 
 
