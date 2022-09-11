@@ -41,3 +41,10 @@ MaxDateToRent : 30
 
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 8777130 (React added pages)
