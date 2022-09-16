@@ -25,7 +25,8 @@ const verifyToken = (req, res, next) => {
 
 const verifyUser = async (req, res, next) => {
     if(req.role !== 'user') return next(createError(401, "Not a User!"));
-  
+
+    req.user_id = req._id
     return next();
   
     //return next(createError(401, "Unauthorized!"));
@@ -34,6 +35,8 @@ const verifyUser = async (req, res, next) => {
 
 const verifyStaff = async(req,res,next) =>{
     if(req.role !== 'staff') return next(createError(401, 'Not a Staff!'))
+
+    req.body.staff_id = req._id
     return next();
 }
 

@@ -15,17 +15,18 @@ function addbooksctrl(req, res) {
 
   // console.log(req.body.image)
   // console.log(bookData)
-  bookData.save((err) => {
+  bookData.save((err,docs) => {
     if (err) {
       console.log(err);
       res.send("task failed").status(400);
     } else {
-      res.send({ success: true });
+      res.json(docs).status(200);
     }
   });
 }
 
 async function listbooksctrl(req, res) {
+  
   const filter = {};
   let listofbooks = await bookForm.bookModel.find(filter);
   console.log(listofbooks);
@@ -59,8 +60,8 @@ async function editbookctrl(req, res) {
   let book_id = req.body.book_id;
   let editObj = req.body.editObj;
 
-  let updatedBook = await bookForm.bookModel.updateOne(
-    { _id: book_id },
+  let updatedBook = await bookForm.bookModel.findByIdAndUpdate(
+     book_id ,
     { $set: { ...editObj } },
     { new: true }
   );

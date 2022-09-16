@@ -20,3 +20,10 @@ Staff members can approve or deny rent requests made by the users.
 Admin
 Admin can add/remove staff members.
 Admin can ban user
+
+
+
+
+TODO:
+implementation of return book 
+uploading image using multer

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,8 +14,11 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import BookCardEdit from '../../Components/BookCardEdit';
-
+import apiHost from '../../env';
+import axios from 'axios';
+import { useToaster,Notification } from 'rsuite';
 export default function StaffDashboard() {
+    const toaster = useToaster()
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -29,6 +32,88 @@ export default function StaffDashboard() {
     };
 
     const [imageFile, setImageFile] = useState(null)
+
+
+
+    const [books, setBooks ] = useState([])
+    useEffect(()=>{
+  
+      getBooks()
+      
+    
+    },[])
+    function getBooks(){
+      let config = {
+        method: 'get',
+        url: apiHost + 'book/listofbooks',
+        
+      };
+      
+      axios(config)
+      .then((response) => {
+        setBooks(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+
+
+
+    //add book states
+    const [eamt, seteamt] = useState('')
+    const [eauthor, seteauthor] = useState('')
+    const [ecat, setecat] = useState('')
+    const [epub, setepub] = useState('')
+    const [etitle, setetitle] = useState('')
+    const [eyop, seteyop] = useState('')
+
+
+  const [saveErr, setSaveErr] = useState(null)
+
+    const AddBook = () =>{
+      
+      
+      if(epub == '' || ecat == '' ||eyop == '' ||eauthor== '' ||eamt== '' ||etitle== '' ){
+        setSaveErr('Not all feilds are added')
+        return
+      }
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+
+      fetch(apiHost + 'staff/addbooks',{
+          credentials:'include',
+          method: 'POST',
+          headers: myHeaders,
+          body: JSON.stringify({
+              image: "/book.jpg",
+              amountRate:Number(eamt),
+              author:eauthor,
+              category:ecat,
+              image:"/book.jpg",
+              publisher:epub,
+              title:etitle,
+              yearOfPublishing:Number(eyop)
+          })
+      })
+      .then(res => {
+        console.log(res.status)
+        if(res.status == 200){
+          return res
+        }
+      }).then(res => res.json())
+      .then(res => {
+        let tempBooks = books
+        tempBooks.push(res)
+        setBooks([...tempBooks])
+        toaster.push(<Notification type={'success'} header={'success'} closable>
+        Book added successfully
+      </Notification>, {placement:'bottomEnd'})
+      handleClose()
+      })
+      .catch(err => setSaveErr('Something is worng, not added'))
+    }
   return (
     <>
     <div>
@@ -40,11 +125,13 @@ export default function StaffDashboard() {
            </div>
         </div>
     <div className="container">
-
-        <BookCardEdit/>
-        <BookCardEdit/>
-        <BookCardEdit/>
-        <BookCardEdit/>
+    {
+      books.map((book,index) =>{
+        return <BookCardEdit book={book} setBooks={setBooks} books={books} index={index}/>
+      })
+    }
+        
+  
     </div>
     </div>
    
@@ -61,6 +148,8 @@ export default function StaffDashboard() {
         <DialogContent>
           <DialogContentText>
             All fields are mandatory.
+            {saveErr && <p className="alert alert-danger">{saveErr}</p>}
+
           </DialogContentText>
           <div className="form">
             {/* image: string   (multer npm lib for uploading imgs to backend)
@@ -79,19 +168,21 @@ export default function StaffDashboard() {
                 <PhotoCamera />
             </IconButton>
             </div>
-           <TextField id="filled-basic" label="Book title" variant="filled" className='m-3'/> 
-           <TextField id="filled-basic" label="Book author" variant="filled"  className='m-3'/> 
-           <TextField id="filled-basic" label="Book publisher" variant="filled"  className='m-3'/> 
-           <TextField id="filled-basic" label="Book category" variant="filled"  className='m-3'/> 
-           <TextField id="filled-basic" label="Year of Publishing" variant="filled"  className='m-3'/> 
-           <TextField id="filled-basic" label="Rate to rent per day" variant="filled"  className='m-3'/> 
+            <TextField id="filled-basic" label="Book title" variant="filled" className='m-3' value={etitle} onChange={e => setetitle(e.target.value)}/> 
+           <TextField id="filled-basic" label="Book author" variant="filled"  className='m-3' value={eauthor} onChange={e => seteauthor(e.target.value)}/> 
+           <TextField id="filled-basic" label="Book publisher" variant="filled"  className='m-3' value={epub} onChange={e => setepub(e.target.value)}/> 
+           <TextField id="filled-basic" label="Book category" variant="filled"  className='m-3' value={ecat} onChange={e => setecat(e.target.value)}/> 
+           <TextField id="filled-basic" label="Year of Publishing" variant="filled"  className='m-3' value={eyop} onChange={e => seteyop(e.target.value)}/> 
+           <TextField id="filled-basic" label="Rate to rent per day" variant="filled"  className='m-3' value={eamt} onChange={e => seteamt(e.target.value)}/>
           </div>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={()=>{
+            AddBook()
+          }} autoFocus>
             Add Book!
           </Button>
         </DialogActions>

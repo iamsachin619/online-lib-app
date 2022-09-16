@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const url = 'mongodb+srv://hero:23M33cSW3rQ3pEwS@cluster0.ycy0x.mongodb.net/BooksLibrary';
-//const url =  'mongodb://localhost:27017/test';
+// const url = 'mongodb+srv://hero:23M33cSW3rQ3pEwS@cluster0.ycy0x.mongodb.net/BooksLibrary';
+const url =  'mongodb://localhost:27017/onlineLib';
 
 // connect to database.
 mongoose.connect(url);

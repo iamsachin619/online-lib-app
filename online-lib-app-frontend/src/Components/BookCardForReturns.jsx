@@ -8,7 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-export default function BookCardForReturns() {
+import moment from "moment";
+export default function BookCardForReturns({book}) {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -29,13 +30,13 @@ export default function BookCardForReturns() {
       </div>
       <div className="description">
         <p className="title">
-          Roughing It
+          {book.title}
           <br />
-          <span className="author">Mark Twain</span>
+          <span className="author">{book.author}</span>
         </p>
       </div>
       <div className="data">
-        <p className="dueDate mb-1">Due date: 25/03/22</p>
+        <p className="dueDate mb-1">Due date:{moment(book.rental.dueDate).format('L')}</p>
         <button className="btn btn-dark w-100" onClick={()=>setOpen(true)}>Return Book</button>
       </div>
     </div>

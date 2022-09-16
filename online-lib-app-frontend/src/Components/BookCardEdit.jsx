@@ -17,7 +17,10 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import './bookCard.css'
-export default function BookCardEdit() {
+import apiHost from "../env";
+import { useToaster,Notification } from "rsuite";
+export default function BookCardEdit({book,setBooks, books,index}) {
+  const toaster = useToaster()
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -40,6 +43,81 @@ export default function BookCardEdit() {
   }
 
   const [imageFile, setImageFile] = useState(null)
+
+  const [saveErr, setSaveErr] = useState(null)
+
+  const [eamt, seteamt] = useState(book.amountRate)
+  const [eauthor, seteauthor] = useState(book.author)
+  const [ecat, setecat] = useState(book.category)
+  const [epub, setepub] = useState(book.publisher)
+  const [etitle, setetitle] = useState(book.title)
+  const [eyop, seteyop] = useState(book.yearOfPublishing)
+  
+  const EditBook = () =>{
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    fetch(apiHost + 'staff/editbooks',{
+        credentials:'include',
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify({
+          book_id: book._id,
+          editObj: {
+            amountRate:Number(eamt),
+            author:eauthor,
+            category:ecat,
+            image:"/book.jpg",
+            publisher:epub,
+            title:etitle,
+            yearOfPublishing:Number(eyop)
+          }
+        })
+    })
+    .then(res => {
+      if(res.status ==200){
+        return res
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log({res})
+      let tempBooks = books
+      tempBooks[index] = res
+      setBooks([...tempBooks])
+      toaster.push(<Notification type={'success'} header={'success'} closable>
+      Book edited successfully
+      </Notification>, {placement:'bottomEnd'})
+      handleClose()
+      
+    })
+    .catch(err => setSaveErr("Not able to save!"))
+  }
+
+  const [delErr, setDelErr] = useState(null)
+  const DeleteBook = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    fetch(apiHost + 'staff/deletebooks',{
+        credentials:'include',
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify({
+          book_id: book._id})})
+        .then(res => {
+          if(res.status == 200) {
+            let tempBooks = books
+            console.log({tempBooks})
+            tempBooks.splice(index,1)
+            console.log({tempBooks})
+
+            setBooks([...tempBooks])
+            toaster.push(<Notification type={'success'} header={'success'} closable>
+            Book deleted successfully
+          </Notification>, {placement:'bottomEnd'})
+          handleCloseD()
+          }
+        })
+  }
   return (
     <>
     <div className="book unread">
@@ -56,9 +134,9 @@ export default function BookCardEdit() {
       </div>
       <div className="description">
         <p className="title">
-          Roughing It
+          {book.title}
           <br />
-          <span className="author">Mark Twain</span>
+          <span className="author">{book.author}</span>
         </p>
       </div>
       {/* <div className="details">
@@ -81,8 +159,9 @@ export default function BookCardEdit() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            
+            {saveErr && <p className="alert alert-danger">{saveErr}</p>}
           </DialogContentText>
+
           <div className="form">
             {/* image: string   (multer npm lib for uploading imgs to backend)
     title: string 
@@ -100,20 +179,20 @@ export default function BookCardEdit() {
                 <PhotoCamera />
             </IconButton>
             </div>
-           <TextField id="filled-basic" label="Book title" variant="filled" className='m-3'/> 
-           <TextField id="filled-basic" label="Book author" variant="filled"  className='m-3'/> 
-           <TextField id="filled-basic" label="Book publisher" variant="filled"  className='m-3'/> 
-           <TextField id="filled-basic" label="Book category" variant="filled"  className='m-3'/> 
-           <TextField id="filled-basic" label="Year of Publishing" variant="filled"  className='m-3'/> 
-           <TextField id="filled-basic" label="Rate to rent per day" variant="filled"  className='m-3'/> 
+           <TextField id="filled-basic" label="Book title" variant="filled" className='m-3' value={etitle} onChange={e => setetitle(e.target.value)}/> 
+           <TextField id="filled-basic" label="Book author" variant="filled"  className='m-3' value={eauthor} onChange={e => seteauthor(e.target.value)}/> 
+           <TextField id="filled-basic" label="Book publisher" variant="filled"  className='m-3' value={epub} onChange={e => setepub(e.target.value)}/> 
+           <TextField id="filled-basic" label="Book category" variant="filled"  className='m-3' value={ecat} onChange={e => setecat(e.target.value)}/> 
+           <TextField id="filled-basic" label="Year of Publishing" variant="filled"  className='m-3' value={eyop} onChange={e => seteyop(e.target.value)}/> 
+           <TextField id="filled-basic" label="Rate to rent per day" variant="filled"  className='m-3' value={eamt} onChange={e => seteamt(e.target.value)}/> 
           </div>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button  onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleClose} autoFocus>
-            Confirm
+          <Button onClick={()=>{EditBook()}} >
+            Save
           </Button>
         </DialogActions>
       </Dialog>
@@ -130,17 +209,11 @@ export default function BookCardEdit() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            
+              {delErr && <p className="alert alert-danger">{delErr}</p>}
+
           </DialogContentText>
           <div className="form">
-            {/* image: string   (multer npm lib for uploading imgs to backend)
-    title: string 
-    author: string
-    publisher: string
-    category: string
-    yearOfPublishing: Int32  //number
-    uploader: String  // users_id
-    amountRate: */}
+           
             
       <p className="content">Are you sure to delete this book? once confirmed it will be deleted from the Library</p>
            
@@ -150,7 +223,9 @@ export default function BookCardEdit() {
           <Button autoFocus onClick={handleCloseD}>
             Cancel
           </Button>
-          <Button onClick={handleCloseD} >
+          <Button onClick={()=>{
+            DeleteBook()
+          }} >
             Confirm
           </Button>
         </DialogActions>

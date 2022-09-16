@@ -17,9 +17,15 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import apiHost from '../env';
 
 const drawerWidth = 240;
 export default function NavBar(props) {
+  console.log({props})
+  const [search, setSearch] = useState('')
+
+
     const navigation = useNavigate()
     const {pathname} = useLocation()
     const navigationMap = {
@@ -101,7 +107,10 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
   }));
   
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  const StyledInputBase = styled(InputBase)(({ theme }) => (
+    
+    
+    {
     color: 'inherit',
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
@@ -114,6 +123,22 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
       },
     },
   }));
+
+
+  const signOut = () => {
+
+    fetch(apiHost + 'signOut',{
+      credentials:'include'
+    })
+    .then(res => {
+      if(res.status == 200){
+        props.setUser(null);
+        sessionStorage.setItem('user', JSON.stringify(null))
+        console.log('signed out')
+        navigation('/')
+      }
+    })
+  }
   return (
     <div>
         <AppBar component="nav" style={{backgroundColor:'black'}}>
@@ -134,22 +159,29 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
           >
             MyLibrary
           </Typography>
-          {pathname=='/userLandingPage' &&<Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
+          {pathname=='/userLandingPage' &&
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+               
+                 placeholder="Search books…"
+                 inputProps={{ 'aria-label': 'search',value: search,"onChange":(e)=>{setSearch(e.target.value)} }}
+              />
+              {/* <input 
               placeholder="Search books…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>}
+              onChange={e => {setSearch(e.target.value)}}
+              inputProps={{ 'aria-label': 'search' }}/> */}
+              
+            </Search>}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item.name} sx={{ color: '#fff' }} onClick={()=> navigation(item.path)}>
                 {item.name}
               </Button>
             ))}
-            <Button sx={{ color: '#fff' }} onClick={()=> {props.setUser(null);navigation('/')}}>
+            <Button sx={{ color: '#fff' }} onClick={()=> {signOut()}}>
                 SignOut
               </Button>
           </Box>

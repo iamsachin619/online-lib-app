@@ -17,8 +17,9 @@ import AdminUserControl from './Pages/Admin/AdminUserControl';
 import { useEffect, useState } from 'react';
 import NavBar from './Components/NavBar';
 import UserBooks from './Pages/User/UserBooks';
+import TestCookie from './Pages/testCookie';
 function App() {
-  sessionStorage.setItem('user', JSON.stringify({role:'staff'}))//line to remove later
+  
   let sessionUser = JSON.parse(sessionStorage.getItem('user'))
   const [user, setUser] = useState(sessionUser)
   useEffect(()=>{
@@ -34,11 +35,13 @@ function App() {
       {user && <NavBar user={user} setUser={setUser}/>}
     
       <Routes>
-        <Route path="/login" element={<LoginPage />}/>
+        <Route path='/' element={<TestCookie/>}/>
+
+        <Route path="/login" element={<LoginPage setUser={setUser}/>}/>
 
         {/* users */}
-        <Route path="/register" element={<UserRegister />}/> 
-        <Route path="/userLandingPage" element={<UserLandingPage />}/>  
+        <Route path="/register" element={<UserRegister setUser={setUser}/>}/> 
+        <Route path="/userLandingPage" element={<UserLandingPage user={user}/>}/>  
         <Route path="/userRentalsPage" element={<UserRentalsPage />}/>   {/* orders placed by user */}
         <Route path="/userBooks" element={<UserBooks />}/>   {/* books rented by user   ...can return it from here...check due date */}
 

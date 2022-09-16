@@ -2,8 +2,14 @@ const mongoose = require("mongoose");
 const userForm = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
-function userregisterctrl(req, res) {
-  let userData = userForm.userModel({
+async function userregisterctrl(req, res) {
+
+  if( req.body.firstName == ''|| req.body.lastName ==''|| req.body.email ==''|| req.body.password ==''){
+    res.json({err: 'Bad request'}).status(400)
+  }else{
+
+  
+  let userData = await userForm.userModel({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
@@ -12,29 +18,44 @@ function userregisterctrl(req, res) {
     status: true,
   });
 
-  //console.log(userData)
+  console.log(userData)
 
-  userData.save((err) => {
+  userData.save((err,userData) => {
     if (err) {
-      console.log(err);
+      res.json({err:'Bad request'}).status(400)
     } else {
-      res.send({ success: true });
+      const token = jwt.sign(
+        { id: userData._id, role: userData.typeOfUser },
+        process.env.JWT_SECRET
+      );
+      res
+        .status(200)
+        .cookie("access_token", token)
+        .json({
+          email: userData.email,
+          firstName: userData.firstName,
+          role: userData.typeOfUser,
+        })
+
+        
     }
   });
 }
+}
 
 async function userloginctrl(req, res) {
+  // console.log(req.body)
   let useremail = req.body.email;
   let userpassword = req.body.password;
-  console.log(useremail);
+  // console.log(useremail);
 
   let user = await userForm.userModel.findOne({ email: useremail });
-  console.log(user);
+  // console.log(user);
 
   if (user) {
    
     if(user.status == false) {
-        res.send('user is not active ').status(403)
+        res.json({err: 'user is not active '}).status(403)
     }
     if (userpassword == user.password) {
       const token = jwt.sign(
@@ -42,7 +63,7 @@ async function userloginctrl(req, res) {
         process.env.JWT_SECRET
       );
       res
-        .cookie("access_token", token, { httpOnly: true })
+        .cookie("access_token", token)
         .json({
           email: user.email,
           firstName: user.firstName,
@@ -50,10 +71,10 @@ async function userloginctrl(req, res) {
         })
         .status(200);
     } else {
-      res.send('invalid pass').status(401);
+      res.json({err:'invalid pass'}).status(401);
     }
   } else {
-    res.send("User not found").status(404);
+    res.json({err:"User not found"}).status(404);
   }
 }
 

@@ -10,12 +10,12 @@ async function bookrentalcreatecltr(req, res) {
   dueDate.setDate(todaysday + req.body.noOfDaysToRent ) //req.body.noOfDaysToRent
 //   rentaldays = todaysday + 30;
 //   console.log(rentaldays);
-
-let book =await bookForm.bookModel.findOne({_id:req.body.book_id})
-
+  console.log(req.body)
+  let book = await bookForm.bookModel.findOne({_id:req.body.book_id})
+  console.log({book})
   let rentData = rentForm.rentModel({
     Book_id: req.body.book_id,
-    User_id: req.body.user_id,
+    User_id: req.user_id,
     createdDate: new Date(),
     dueDate: new Date(),
     approvalDate: new Date(),
@@ -40,7 +40,7 @@ let book =await bookForm.bookModel.findOne({_id:req.body.book_id})
 
 
 async function usermybooks(req, res) {
-  let user_id = req.body.user_id;
+  let user_id = req.user_id;
   let rentsByUser = await rentForm.rentModel.find({
     User_id: user_id,
     Status: "approved",
@@ -49,7 +49,7 @@ async function usermybooks(req, res) {
   let myBooks = await Promise.all(
     rentsByUser.map(async (rental) => {
       let book = await bookForm.bookModel.findOne({ _id: rental.Book_id });
-      return book;
+      return {...book._doc, rental:rental._doc};
     })
   );
 
@@ -57,9 +57,21 @@ async function usermybooks(req, res) {
 }
 
 async function usermyOrders(req, res) {
-  let user_id = req.body.user_id;
+  let user_id = req.user_id;
   let rentsByUser = await rentForm.rentModel.find({ User_id: user_id });
-  res.json(rentsByUser);
+  
+  let ordersWithBooks = await Promise.all(
+    rentsByUser.map(async ( orders) => {
+      let book = await bookForm.bookModel.findById(orders.Book_id)
+      console.log(book)
+      return {...orders._doc, book}
+    })
+    
+  )
+    
+  
+  console.log({ordersWithBooks})
+  res.json(ordersWithBooks);
 }
 
 module.exports = {
