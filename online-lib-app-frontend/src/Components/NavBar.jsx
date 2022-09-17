@@ -29,6 +29,11 @@ export default function NavBar(props) {
     const navigation = useNavigate()
     const {pathname} = useLocation()
     const navigationMap = {
+        nouser:[
+          {name:'Home', path:'/userLandingPage'},
+          {name:'Login', path:'/login'},
+          {name:'Register', path:'/register'},
+        ],
         user:[
             {name:'Home', path:'/userLandingPage'},
             {name:'MyBooks', path:'/userBooks'},
@@ -47,9 +52,9 @@ export default function NavBar(props) {
 
         
     }
-    console.log(navigationMap[props.user.role])
-    const navItems = navigationMap[props.user.role];
-
+    //console.log(navigationMap[props.user? .role])
+    const navItems = navigationMap[props.user? props.user.role:'nouser'];
+    console.log({navItems})
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
   
@@ -71,11 +76,11 @@ export default function NavBar(props) {
                 </ListItemButton>
               </ListItem>
             ))}
-            <ListItem  disablePadding>
-                <ListItemButton sx={{ textAlign: 'center' }} onClick={()=> {props.setUser(null);navigation('/')}}>
+            {props.user && <ListItem  disablePadding>
+                <ListItemButton sx={{ textAlign: 'center' }} onClick={()=> {signOut()}}>
                   <ListItemText primary='SignOut' />
                 </ListItemButton>
-              </ListItem>
+              </ListItem>}
           </List>
         </Box>
       );
@@ -181,9 +186,9 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
                 {item.name}
               </Button>
             ))}
-            <Button sx={{ color: '#fff' }} onClick={()=> {signOut()}}>
+            {props.user&&<Button sx={{ color: '#fff' }} onClick={()=> {signOut()}}>
                 SignOut
-              </Button>
+              </Button>}
           </Box>
         </Toolbar>
       </AppBar>

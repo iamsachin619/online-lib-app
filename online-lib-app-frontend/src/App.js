@@ -5,6 +5,9 @@ import {
   Routes,
   Route,
   useLocation,
+  Switch,
+  useNavigate,
+  redirect
 } from "react-router-dom";
 import LoginPage from './Pages/LoginPage';
 import UserRegister from './Pages/User/UserRegister';
@@ -18,8 +21,9 @@ import { useEffect, useState } from 'react';
 import NavBar from './Components/NavBar';
 import UserBooks from './Pages/User/UserBooks';
 import TestCookie from './Pages/testCookie';
+import RedirectorPage from './Pages/RedirectorPage';
 function App() {
-  
+  const navigation = useNavigate()
   let sessionUser = JSON.parse(sessionStorage.getItem('user'))
   const [user, setUser] = useState(sessionUser)
   useEffect(()=>{
@@ -29,13 +33,18 @@ function App() {
   },[user])
 
   const {pathname} = useLocation()
-  console.log({pathname})
+  // console.log({pathname})
   return (
     <div className="App">
-      {user && <NavBar user={user} setUser={setUser}/>}
+      {pathname !='/login'&& pathname !='/register' && <NavBar user={user} setUser={setUser}/>}
     
       <Routes>
-        <Route path='/' element={<TestCookie/>}/>
+        <Route path='/' 
+        element={
+          <RedirectorPage pathname={pathname} user={user}/>
+        }
+        />
+
 
         <Route path="/login" element={<LoginPage setUser={setUser}/>}/>
 
