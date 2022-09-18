@@ -41,7 +41,7 @@ MaxDateToRent : 30
 
 
 
-<<<<<<< HEAD
+
 
 
 

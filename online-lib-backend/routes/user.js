@@ -12,5 +12,7 @@ routes.post('/userlogin', userfunctions.userloginctrl )
 routes.post('/usermybooks',verifyToken, verifyUser, rentalfunction.usermybooks)
 routes.post('/usermyorders',verifyToken, verifyUser,rentalfunction.usermyOrders)
 routes.post('/createRental',verifyToken,verifyUser, rentalfunction.bookrentalcreatecltr)
+routes.post('/returnBook',verifyToken,verifyUser, rentalfunction.userReturnBook)
+
     
 module.exports = routes

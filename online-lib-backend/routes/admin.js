@@ -11,6 +11,9 @@ routes.post('/disableuser',verifyToken, verifyAdmin, adminfunctions.userdisable)
 routes.post('/enableuser',verifyToken, verifyAdmin, adminfunctions.userenable)
 routes.get('/getUserList',verifyToken, verifyAdmin, adminfunctions.listOfUsers)
 routes.post('/searchUsers',verifyToken, verifyAdmin, adminfunctions.searchUser)
+routes.post('/searchStaff',verifyToken, verifyAdmin, adminfunctions.searchStaff)
+routes.get('/getStaffList',verifyToken, verifyAdmin, adminfunctions.listOfStaff)
+
 
 
 module.exports = routes

@@ -14,19 +14,24 @@ let userData = userForm.userModel({
 
         console.log(userData)
 
-    userData.save(err => { 
+    userData.save((err, docs) => { 
         if(err){
             console.log(err)
             res.send('not created').status(400)
         }
         else{
-            res.send({success: true });
+            res.json(docs).status(200);
         }})
 }
 
 async function listOfUsers(req, res){
-    let users = await userForm.userModel.find()
+    let users = await userForm.userModel.find({typeOfUser:'user'})
     res.json(users).status(200)
+}
+
+async function listOfStaff(req, res){
+    let staffs = await userForm.userModel.find({typeOfUser:'staff'})
+    res.json(staffs).status(200)
 }
 
 async function searchUser(req, res){
@@ -42,7 +47,24 @@ async function searchUser(req, res){
         ],
       };
 
-    const searchResult = await userForm.userModel.find(filter)
+    const searchResult = await userForm.userModel.find({...filter,typeOfUser:'user'})
+    res.json(searchResult).status(200)
+}
+
+async function searchStaff(req, res){
+    console.log('serach funciton')
+    let searchtitle = req.body.search
+
+    const filter = {
+        $or: [
+           
+          { firstName: { $in: [searchtitle] } },
+          { lastName: { $in: [searchtitle] } },
+          { email: { $in: [searchtitle] } },
+        ],
+      };
+
+    const searchResult = await userForm.userModel.find({...filter,typeOfUser:'staff'})
     res.json(searchResult).status(200)
 }
 //Staff login section
@@ -105,7 +127,7 @@ async function userdisable(req,res){
     })
         }
         else{
-            res.send("user not found")
+            res.send("user not found").status(404)
         }
        
 }
@@ -135,5 +157,5 @@ async function userenable(req,res){
        
 }
 
-    module.exports = {staffregisterctrl , staffloginctrl, userdisable, userenable,listOfUsers,searchUser}
+    module.exports = {staffregisterctrl , staffloginctrl, userdisable, userenable,listOfUsers,searchUser,listOfStaff,searchStaff}
     

@@ -9,7 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import moment from "moment";
-export default function BookCardForReturns({book}) {
+import apiHost from "../env";
+export default function BookCardForReturns({book, books , setBooks,index}) {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -22,6 +23,29 @@ export default function BookCardForReturns({book}) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const ReturnBook = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    fetch(apiHost + 'user/returnBook',{
+      credentials:'include',
+          method: 'POST',
+          headers: myHeaders,
+          body: JSON.stringify({
+            rent_id: book.rental._id
+    })})
+    .then(res => {
+      if(res.status == 200){
+        return res
+      }
+    })
+    .then(res => {
+      let tempBooks = books
+      tempBooks.splice(index, 1)
+      setBooks([...tempBooks])
+      handleClose()
+    })
+  }
   return (
     <>
     <div className="bookR unread">
@@ -55,10 +79,10 @@ export default function BookCardForReturns({book}) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button  onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={ReturnBook} >
             Confirm
           </Button>
         </DialogActions>

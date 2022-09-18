@@ -74,8 +74,37 @@ async function usermyOrders(req, res) {
   res.json(ordersWithBooks);
 }
 
+
+async function userReturnBook(req, res){
+  let rent_id = req.body.rent_id
+  let user_id = req.user_id
+  let rental = await rentForm.rentModel.findById(rent_id)
+  console.log({rental})
+  if(rental.User_id != user_id || rental.Status != 'approved'){
+    res.json({err:'Book does not belong to you'}).status(400)
+  }
+  let currentDate = new Date()
+  let lateFeeCharged = 0
+  if(rental.dueDate < currentDate){
+    console.log(rental.dueDate)
+    let book = await bookForm.bookModel.findById(rental.Book_id)
+    let daysLate = currentDate.getDate() - rental.dueDate.getDate(); 
+    console.log(daysLate)
+    lateFeeCharged = process.env.LATE_FEE * daysLate
+
+    //plus book rate per day
+    lateFeeCharged = lateFeeCharged + (book.amountRate * daysLate)
+    console.log(lateFeeCharged)
+  }else{
+    console.log(false)
+  }
+  let updatedRental = await rentForm.rentModel.findByIdAndUpdate(rent_id,{$set:{Status:'closed',returnDate:new Date(),lateFeeCharged:lateFeeCharged }},{new:true})
+  res.json(updatedRental).status(200)
+}
+
 module.exports = {
   bookrentalcreatecltr,
   usermybooks,
   usermyOrders,
+  userReturnBook
 };

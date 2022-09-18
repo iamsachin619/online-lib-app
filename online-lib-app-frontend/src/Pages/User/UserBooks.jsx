@@ -35,8 +35,8 @@ export default function UserBooks() {
         <Toolbar/>
         <div className="container">
             {
-              books.map((book) =>{
-                return  <BookCardForReturns book={book}/>
+              books.map((book,index) =>{
+                return  <BookCardForReturns book={book} books={books} setBooks={setBooks} index={index}/>
               })
             }
            
