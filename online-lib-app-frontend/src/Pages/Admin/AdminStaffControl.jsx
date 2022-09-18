@@ -21,8 +21,9 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import BookCardEdit from '../../Components/BookCardEdit';
 import apiHost from '../../env';
-
-
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@rsuite/icons/Close';
+import InputAdornment from '@mui/material/InputAdornment';
 export default function AdminStaffControl() {
 
     const [open, setOpen] = React.useState(false);
@@ -40,7 +41,10 @@ export default function AdminStaffControl() {
     const [err, setErr] = useState(null)
     const [staffs, setStaffs] = useState([])
     useEffect(() => {
-
+      FetchList()
+      
+    }, [])
+    const FetchList = () =>{
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       fetch(apiHost + 'admin/getStaffList',{
@@ -59,8 +63,8 @@ export default function AdminStaffControl() {
           setStaffs(res)
         })
         .catch(error => {setErr('Error fetching Staffs')})
-    }, [])
-    
+    }
+
     const [fname, setFname] = useState('')
     const [lname, setLname] = useState('')
     const [email, setEmail] = useState('')
@@ -152,6 +156,40 @@ export default function AdminStaffControl() {
         })
         .catch(error => {setErr('Error Disabling Staff')})
     }
+
+
+    const [search, setSearch] = useState('')
+    useEffect(()=>{
+      searchObj()
+    },[search])
+    const searchObj = () =>{
+      if(search == ''){
+        FetchList()
+      }else{
+
+        var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      fetch(apiHost + 'admin/searchStaff',{
+        credentials:'include',
+        method: 'POST',
+        headers: myHeaders,
+        body:JSON.stringify({
+          search:search
+        })
+      })
+        .then(res => {
+          console.log({res})
+          if(res.status == 200){
+            return res
+          }
+        })
+        .then(res => res.json())
+        .then(res => {
+          setStaffs(res)
+        })
+        .catch(error => {setErr('Error fetching Staffs')})
+      }
+    }
   return (
     <>
     <div>
@@ -162,7 +200,22 @@ export default function AdminStaffControl() {
                 <span className="font-weight-bold">Add Staff</span> <AddCircleIcon style={{fontSize:'38px'}}/>
             </div>
         </div>
+        <div className="container">
 
+        <TextField
+            placeholder='Search staff'
+            fullWidth
+            variant="standard"
+            value={search}
+            onChange={(e)=> {setSearch(e.target.value)}}
+            InputProps={{
+              endAdornment:   search==''?
+              <InputAdornment position="end">
+                <SearchIcon/>
+              </InputAdornment>:<InputAdornment position="end"><CloseIcon style={{cursor:'pointer'}} onClick={()=>{setSearch('')}}/></InputAdornment>
+            }}
+          />
+          </div>
         <TableContainer component={Paper} >
 
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -21,13 +21,18 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import BookCardEdit from '../../Components/BookCardEdit';
 import apiHost from '../../env';
-
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@rsuite/icons/Close';
+import InputAdornment from '@mui/material/InputAdornment';
 export default function AdminUserControl() {
 
   const [err, setErr] = useState(null)
   const [users, setUsers] = useState([])
     useEffect(() => {
 
+      FetchList()
+    }, [])
+    const FetchList = () =>{
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       fetch(apiHost + 'admin/getUserList',{
@@ -46,8 +51,7 @@ export default function AdminUserControl() {
           setUsers(res)
         })
         .catch(error => {setErr('Error fetching Staffs')})
-    }, [])
-
+    }
 
     const DisableStaff = (staff, index) => {
       var myHeaders = new Headers();
@@ -102,12 +106,60 @@ export default function AdminUserControl() {
         })
         .catch(error => {setErr('Error Disabling Staff')})
     }
+
+
+    const [search, setSearch] = useState('')
+    useEffect(()=>{
+      searchObj()
+    },[search])
+    const searchObj = () =>{
+      if(search == ''){
+        FetchList()
+      }else{
+
+        var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      fetch(apiHost + 'admin/searchUsers',{
+        credentials:'include',
+        method: 'POST',
+        headers: myHeaders,
+        body:JSON.stringify({
+          search:search
+        })
+      })
+        .then(res => {
+          console.log({res})
+          if(res.status == 200){
+            return res
+          }
+        })
+        .then(res => res.json())
+        .then(res => {
+          setUsers(res)
+        })
+        .catch(error => {setErr('Error fetching Users')})
+      }
+    }
   return (
     <div>
      <Toolbar/>
-         {err && <p className="alert alert-danger">{err}</p>}
+         {err && <p className="alert alert-danger my-2">{err}</p>}
         
-
+         <div className="container mt-3">
+          <TextField
+              placeholder='Search users'
+              fullWidth
+              variant="standard"
+              value={search}
+              onChange={(e)=> {setSearch(e.target.value)}}
+              InputProps={{
+                endAdornment:   search==''?
+                <InputAdornment position="end">
+                  <SearchIcon/>
+                </InputAdornment>:<InputAdornment position="end"><CloseIcon style={{cursor:'pointer'}} onClick={()=>{setSearch('')}}/></InputAdornment>
+              }}
+            />
+            </div>
         <TableContainer component={Paper} >
 
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

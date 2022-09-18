@@ -5,7 +5,7 @@ const booksctrls = require('../controllers/books.js')
 
 
 routes.get('/listofbooks', booksctrls.listbooksctrl )
-routes.get('/searchbooks', booksctrls.searchbooksctrl )
+routes.post('/searchbooks', booksctrls.searchbooksctrl )
 
 
 

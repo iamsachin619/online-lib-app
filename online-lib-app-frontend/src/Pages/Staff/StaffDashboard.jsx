@@ -16,6 +16,9 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import BookCardEdit from '../../Components/BookCardEdit';
 import apiHost from '../../env';
 import axios from 'axios';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@rsuite/icons/Close';
+import InputAdornment from '@mui/material/InputAdornment';
 import { useToaster,Notification } from 'rsuite';
 export default function StaffDashboard() {
     const toaster = useToaster()
@@ -114,6 +117,41 @@ export default function StaffDashboard() {
       })
       .catch(err => setSaveErr('Something is worng, not added'))
     }
+
+  const [err, setErr] = useState(null)
+
+    const [search, setSearch] = useState('')
+    useEffect(()=>{
+      searchObj()
+    },[search])
+    const searchObj = () =>{
+      if(search == ''){
+        getBooks()
+      }else{
+
+        var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      fetch(apiHost + 'book/searchbooks',{
+        credentials:'include',
+        method: 'POST',
+        headers: myHeaders,
+        body:JSON.stringify({
+          search:search
+        })
+      })
+        .then(res => {
+          console.log({res})
+          if(res.status == 200){
+            return res
+          }
+        })
+        .then(res => res.json())
+        .then(res => {
+          setBooks(res)
+        })
+        .catch(error => {setErr('Error fetching Users')})
+      }
+    }
   return (
     <>
     <div>
@@ -124,6 +162,21 @@ export default function StaffDashboard() {
             Add new book <AddCircleIcon style={{fontSize:'38px'}}/>
            </div>
         </div>
+        <div className="container mt-3">
+          <TextField
+              placeholder='Search books'
+              fullWidth
+              variant="standard"
+              value={search}
+              onChange={(e)=> {setSearch(e.target.value)}}
+              InputProps={{
+                endAdornment:   search==''?
+                <InputAdornment position="end">
+                  <SearchIcon/>
+                </InputAdornment>:<InputAdornment position="end"><CloseIcon style={{cursor:'pointer'}} onClick={()=>{setSearch('')}}/></InputAdornment>
+              }}
+            />
+            </div>
     <div className="container">
     {
       books.map((book,index) =>{
