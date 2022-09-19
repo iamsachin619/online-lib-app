@@ -3,13 +3,13 @@ const bookForm = require("../models/bookModel");
 
 function addbooksctrl(req, res) {
   let bookData = bookForm.bookModel({
-    image: req.body.image,
+    image: req.imgName,
     title: req.body.title,
     author: req.body.author,
     publisher: req.body.publisher,
     category: req.body.category,
     yearOfPublishing: req.body.yearOfPublishing,
-    uploader: req.body.uploader,
+    uploader: req.body.staff_id,
     amountRate: req.body.amountRate,
   });
 

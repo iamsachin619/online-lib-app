@@ -7,7 +7,7 @@ const staffFunctions = require('../controllers/staff')
 const booksctrls = require('../controllers/books.js')
 const { verifyToken, verifyUser, verifyStaff } = require('../util/verify')
 const { route } = require('./book')
-/
+const multer = require('../util/multer')
 
 
 
@@ -16,7 +16,7 @@ routes.post('/listPendingRequests',verifyToken, verifyStaff, staffFunctions.list
 routes.post('/approveRental',verifyToken, verifyStaff, staffFunctions.bookrentalapprovalctrl)
 routes.post('/declineRental',verifyToken, verifyStaff, staffFunctions.bookrentaldeclinectrl)  //to devlop
 
-routes.post('/addbooks',verifyToken, verifyStaff, booksctrls.addbooksctrl )
+routes.post('/addbooks',verifyToken, verifyStaff,multer.single('imgFile'), booksctrls.addbooksctrl )
 routes.post('/deletebooks',verifyToken, verifyStaff, booksctrls.deletebooksctrl)
 routes.post('/editbooks',verifyToken, verifyStaff, booksctrls.editbookctrl)
 

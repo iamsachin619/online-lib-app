@@ -70,7 +70,9 @@ export default function BookCard({book,user}) {
     <>
     <div className="book unread" onClick={handleClickOpen}>
       <div className="cover">
-        <img src="http://www.publishersweekly.com/images/data/ARTICLE_PHOTO/photo/000/028/28129-1.JPG" />
+      {
+            book.image?<img src={apiHost +'uploads/' + book.image} /> : <img src='./assets/bookPlaceholder.png'/>
+          }
       </div>
       <div className="description">
         <p className="title">

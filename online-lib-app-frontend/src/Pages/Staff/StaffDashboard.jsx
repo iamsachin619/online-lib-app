@@ -34,7 +34,6 @@ export default function StaffDashboard() {
       setOpen(false);
     };
 
-    const [imageFile, setImageFile] = useState(null)
 
 
 
@@ -73,6 +72,7 @@ export default function StaffDashboard() {
 
 
   const [saveErr, setSaveErr] = useState(null)
+  const [imageFile, setImageFile] = useState(null)
 
     const AddBook = () =>{
       
@@ -82,23 +82,35 @@ export default function StaffDashboard() {
         return
       }
       var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+    
 
+      let body ={
+        image: "/book.jpg",
+        amountRate:Number(eamt),
+        author:eauthor,
+        category:ecat,
+        image:"/book.jpg",
+        publisher:epub,
+        title:etitle,
+        yearOfPublishing:Number(eyop)
+    }
+
+    var formdata = new FormData();
+    formdata.append("title", etitle);
+    formdata.append("author", eauthor);
+    formdata.append("publisher", epub);
+    formdata.append("category",ecat);
+    formdata.append("yearOfPublishing", eyop);
+    formdata.append("amountRate", eamt);
+    if(imageFile){
+      formdata.append('imgFile', imageFile)
+    }
 
       fetch(apiHost + 'staff/addbooks',{
           credentials:'include',
           method: 'POST',
           headers: myHeaders,
-          body: JSON.stringify({
-              image: "/book.jpg",
-              amountRate:Number(eamt),
-              author:eauthor,
-              category:ecat,
-              image:"/book.jpg",
-              publisher:epub,
-              title:etitle,
-              yearOfPublishing:Number(eyop)
-          })
+          body: formdata
       })
       .then(res => {
         console.log(res.status)
