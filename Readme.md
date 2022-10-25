@@ -1,30 +1,31 @@
-Sachin
-Pramod
-Arun
-Majunath
+### Online Library Full-Stack (MERN) App
 
-User Types
-Admin
-Staff
-User
+Online Library app is a basic library portal where 
 
-USer
-Can rent books for a duration
-Can search books
-Late fee to be charged after a particualr duration
+**Users** can:  
 
-Staff
-Staff members can upload book details on the application.
-Staff members can approve or deny rent requests made by the users.
+*   Rent books
+*   Check the order status
+*   Return the book back
 
-Admin
-Admin can add/remove staff members.
-Admin can ban user
+**Staffs** can :
 
+*   Issue new books
+*   Accept or reject the order for renting by users
 
+**Admin** can :
 
+*   Add or Remove staff
+*   Activate and deactivate users
 
-TODO:
-implementation of return book --- done
-search -- done
-uploading image using multer
+---
+
+## **Technologies Used**
+
+*   React JS
+*   React-router
+*   NodeJS
+*   Express
+*   Multer
+*   Mongoose
+*   MongoDB
